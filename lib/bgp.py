@@ -1,5 +1,5 @@
 from twisted.python import log
-from twisted.internet import protocol
+from twisted.internet import reactor, protocol
 import sys, traceback, struct, math
 from kyro.util import *
 
