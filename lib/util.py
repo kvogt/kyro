@@ -1,3 +1,5 @@
+import struct
+
 # Utility functions
 def ip(data): 
     if not isinstance(data, str): data = unlong(data)
