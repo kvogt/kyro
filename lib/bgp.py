@@ -123,8 +123,7 @@ class Protocol(protocol.Protocol):
         self.transport.write(openMessage(params))
         
     def connectionLost(self, reason):
-        log.msg('Lost connection to %s, flushing all routes learned from this peer' % self.ip)
-        self.route_db.flush(self.peer)
+        log.msg('Lost connection to %s.' % self.ip)
         self.connected = False
                 
     def keepAlive(self):
