@@ -1,7 +1,3 @@
-Authors: Kyle Vogt <kyle@justin.tv>
-Copyright (c) 2010, Kyle Vogt
-License: MIT
-
 =======
  Kyro
 =======
