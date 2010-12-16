@@ -1,6 +1,7 @@
 from twisted.python import log
 from twisted.internet import protocol
 import sys, traceback, struct, math
+from kyro.util import *
 
 __author__    = "Kyle Vogt <kyle@justin.tv>"
 __version__   = "0.1"
@@ -106,10 +107,7 @@ class Protocol(protocol.Protocol):
     def connectionMade(self):
         self.connected = True
         self.ip = self.transport.getPeer().host
-        if not config:
-            self.config = self.factory.config
-        else:
-            self.config = config
+        self.config = self.factory.config
         log.msg('Got a connection from %s' % self.ip)
         log.msg('SENDING OPEN')
         params = {
@@ -362,4 +360,3 @@ class Protocol(protocol.Protocol):
     def messageReceived(self, message):
         # OVERRIDE ME!
         log.msg(message)
-    
