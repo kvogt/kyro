@@ -20,9 +20,9 @@ Architecture
 
 There are two daemons: router.py and analyzer.py
 
-Router.py uses Kyro's BGP library to listen for route updates from a BGP speaking router.  These route updates are used to populate a list of prefixes that should be optimized.
+Router.py uses Kyro's BGP library to listen for best-path route updates from a BGP speaking router.  These route updates are used to populate a list of prefixes that should be optimized.
 
-Analyzer.py continuously checks the packet loss and mean round trip time for each prefix over each path.  If a more optimal path is found than the current best path, analyzer.py will ask router.py to inject the new route into
+Analyzer.py continuously checks the packet loss and mean round trip time for each prefix over each path.  If a more optimal path is found than the current best-path, analyzer.py will ask router.py to inject the new route into
 the BGP router's routing table.
 
 Dependencies
