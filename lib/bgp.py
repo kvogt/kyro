@@ -357,8 +357,6 @@ class Protocol(protocol.Protocol):
         # Start keepalive loop (send every hold-time / 3 seconds)
         self.peer = message  
         self.keepAlive()
-        if self.config['statistics']:
-            self.logTableStats()
             
     def messageReceived(self, message):
         # OVERRIDE ME!

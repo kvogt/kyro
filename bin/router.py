@@ -11,7 +11,9 @@ class Peer(bgp.Protocol):
         bgp.Protocol.openMessageReceived(self, message)
         # Set up our own Routing Information Base for this peer
         self.adj_rib = RIB(self.peer)
-    
+        if self.factory.config['statistics']:
+            self.logTableStats()
+            
     def messageReceived(self, message):
         log.msg(message)
         if message['type'] == 'UPDATE':
