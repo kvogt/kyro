@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from twisted.python import log, usage
 from twisted.internet import reactor, protocol
-from kyro import bgp
+from kyro import bgp, rib
 import sys
 
 # Logic for the BGP router
@@ -14,7 +14,7 @@ class Peer(bgp.Protocol):
     def openMessageReceived(self, message):
         bgp.Protocol.openMessageReceived(self, message)
         # Set up our own Routing Information Base for this peer
-        self.adj_rib = RIB(self.peer)
+        self.adj_rib = rib.RIB(self.peer)
         if self.factory.config['statistics']:
             self.logTableStats()
             

@@ -2,7 +2,6 @@ from twisted.python import log
 from twisted.internet import reactor, protocol
 import sys, traceback, struct, math
 from kyro.util import *
-from kyro.rib import RIB
 
 __author__    = "Kyle Vogt <kyle@justin.tv>"
 __version__   = "0.1"
