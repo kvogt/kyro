@@ -8,7 +8,7 @@ import sys
 class Peer(bgp.Protocol):
     
     def messageReceived(self, message):
-        log.msg(msg)
+        log.msg(message)
         if message['type'] == 'UPDATE':
             attrs = message.get('path_attributes', [])
             as_path = ''
