@@ -83,7 +83,7 @@ class Pinger:
             print "ping_start(%s)" % hostinfo['host']
             uid = hostinfo['host'] + "_%08s_" % random.randint(0, 99999999)
             if is_linux:
-                args = "-i .1 -c 300 %s" % hostinfo['host']
+                args = "-i 1 -c 100 %s" % hostinfo['host']
             else:
                 args = "-i 1 -c 100 %s" % hostinfo['host']
             output = utils.getProcessOutput(self.ping_command, args.split())
