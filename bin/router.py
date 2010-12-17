@@ -7,6 +7,10 @@ import sys
 # Logic for the BGP router
 class Peer(bgp.Protocol):
     
+    def logTableStats(self):
+        log.msg('STATS (%s-%s): adj_rib: %s routes\ttotal: %s routes' % (self.peer['bgp_identifier'], self.peer['sender_as'], self.adj_rib.num_routes(), self.total_routes))
+        reactor.callLater(5.0, self.logTableStats)
+
     def openMessageReceived(self, message):
         bgp.Protocol.openMessageReceived(self, message)
         # Set up our own Routing Information Base for this peer

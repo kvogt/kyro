@@ -131,10 +131,6 @@ class Protocol(protocol.Protocol):
             self.transport.write(keepAliveMessage())
             self.keepAliveDeferred = reactor.callLater(int(self.config['hold-time']) / 3.0, self.keepAlive)
 
-    def logTableStats(self):
-        log.msg('STATS (%s-%s): adj_rib: %s routes\ttotal: %s routes' % (self.peer['bgp_identifier'], self.peer['sender_as'], self.adj_rib.num_routes(), self.total_routes))
-        reactor.callLater(5.0, self.logTableStats)
-        
     def advance(self, bytes, fun, next):
         if len(self.buffer) >= bytes:
             self.message[self.state] = fun(self.buffer[:bytes])
