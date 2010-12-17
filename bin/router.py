@@ -7,6 +7,11 @@ import sys
 # Logic for the BGP router
 class Peer(bgp.Protocol):
     
+    def openMessageReceived(self, message):
+        bgp.Protocol.openMessageReceived(self, message)
+        # Set up our own Routing Information Base for this peer
+        self.adj_rib = RIB(self.peer)
+    
     def messageReceived(self, message):
         log.msg(message)
         if message['type'] == 'UPDATE':
@@ -32,7 +37,7 @@ class Peer(bgp.Protocol):
                     #log.msg('\t%s' % route)
                     self.total_routes += 1
                     self.current_routes += 1
-                    #self.adj_rib.update(prefix, next_hop, as_path)
+                    self.adj_rib.update(prefix, next_hop, as_path)
                 new_routes = dict(zip(prefixes, [(next_hop, as_path) for i in range(len(prefixes))]))
                 community = self.extractCommunity(message, self.config['sender-as'])
                 pref = self.extractLocalPreference(message)
@@ -43,7 +48,7 @@ class Peer(bgp.Protocol):
                 for prefix in prefixes:
                     #log.msg('\t%s' % route)
                     self.current_routes -= 1
-                    #self.adj_rib.withdraw(prefix)
+                    self.adj_rib.withdraw(prefix)
             #self.route_db.withdraw(prefixes, self.peer['bgp_identifier'])
     
 class PeerFactory(protocol.ServerFactory):
@@ -57,6 +62,7 @@ if __name__ == '__main__':
     class Options(usage.Options):
         optFlags = [
             ['verbose', 'v', 'Verbose logging'],
+            ['statistics', 's', 'Enable BGP statistics logging'],            
         ]
         optParameters = [
             ['log', 'l', 'stdout', 'Log file'],
@@ -64,11 +70,6 @@ if __name__ == '__main__':
             ['bgp-identifier', 'i', '127.0.0.1', 'BGP identifier'],
             ['hold-time', 'o', '180', 'BGP hold time'],
             ['bgp-port', 'b', '179', 'Local BGP server port'],
-            ['db-name', '', 'database', 'Route database name'],
-            ['db-host', '', '127.0.0.1', 'Route database host'],
-            ['db-port', '', '5432', 'Route database port'],
-            ['db-user', '', '', 'Route database user'],
-            ['db-pass', '', '', 'Route database password'],
         ]
     config = {}
     try:
