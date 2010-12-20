@@ -34,7 +34,7 @@ class Pinger():
         for sock in rlist:
             if sock == sys.stdin:
                 line = sys.stdin.readline()
-                if self.state = STATE_COMMAND:
+                if self.state == STATE_COMMAND:
                     line = line.strip().upper()
                     if line.startswith == 'PING':
                         # TODO: allow registration of pings' remotely
