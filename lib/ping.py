@@ -15,6 +15,7 @@ class Pinger():
         self.received = 0
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP)
         self.sock.setblocking(False)
+        # Need massive socket receive buffer if concurrency is high
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 1048576 * 2)
         
     def register(self, addr, id):
