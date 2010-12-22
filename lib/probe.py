@@ -64,7 +64,7 @@ class Prober():
                     probe.max_ttl -= 1
                     probe.log("MAPPED mapped_ip=%s max_ttl=%s" % (probe.mapped_ip, probe.max_ttl))
                 else:
-                    probe.log("MAPPING_TIMEOUT mapped_ip=%s" % probe.mapped_ip)
+                    probe.log("MAPPING_TIMEOUT")
                     probe.mapping_tries += 1
             elif not probe.mapped:
                 # If probe isn't mapped, advance TTL and send a ping
@@ -187,8 +187,8 @@ class Prober():
         self.sock.sendto(packet, (addr, 1))
 
 if __name__ == "__main__":
-    hosts = ['cnn.com', 'google.com', 'justin.tv', 'yahoo.com', 'nytimes.com', 'ustream.tv', 'ycombinator.com',
-        'blogtv.com', 'comcast.com', 'ea.com']
+    hosts = ['cnn.com'] #, 'google.com', 'justin.tv', 'yahoo.com', 'nytimes.com', 'ustream.tv', 'ycombinator.com',
+        #'blogtv.com', 'comcast.com', 'ea.com']
     probe = Prober()
     for host in hosts:
         print "Adding probe for %s..." % host
