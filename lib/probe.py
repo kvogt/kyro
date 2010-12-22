@@ -70,9 +70,11 @@ class Prober():
                 # If probe isn't mapped, advance TTL and send a ping
                 probe.max_ttl += 1
             probe.waiting = True
+            # Schedule a timeout handler
             probe.next_ts = now + probe.timeout
-            probe.seq += 1
             probe.ping_ts = now
+            probe.seq += 1
+            # Send the ping!
             probe.log("PING ip=%s id=%s seq=%s ttl=%s" % (probe.ip, self.pid, probe.seq, probe.max_ttl))
             self.ping(probe.ip, id=self.pid, seq=probe.seq, ttl=probe.max_ttl)
         # Process incoming data
@@ -127,9 +129,11 @@ class Prober():
                     ms = int((now - probe.ping_ts) * 1000.0)
                     probe.log("PONG type=time_exceeded id=%s seq=%s addr=%s ms=%s" % (oid, oseq, paddr, ms))
                     if probe.mapped:
+                        # Just schedule the next regular ping
                         probe.next_ts = now + probe.interval
                         probe.waiting = False
                     if not probe.mapped:
+                        # Set new max_ttl, if necessary, and continue mapping
                         probe.max_ttl = max(oseq, probe.max_ttl)
                         probe.next_ts = now
                         probe.waiting = False
