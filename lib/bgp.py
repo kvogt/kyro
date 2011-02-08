@@ -96,6 +96,7 @@ def encodePathAttributes(params):
 # Parser
 class Protocol(protocol.Protocol):
     def __init__(self, config={}):
+        protocol.Protocol.__init__(self)
         self.state = 'start'
         self.buffer = ''
         self.message = {}

@@ -33,10 +33,11 @@ class Peer(bgp.Protocol):
                     del self.rib[prefix]
                 
 class PeerFactory(protocol.ServerFactory):
+    protocol = Peer
+    
     def __init__(self, config):
         log.msg('config: %s' % repr(config))
         self.config = config
-        self.protocol = Peer
 
 if __name__ == '__main__':
 
