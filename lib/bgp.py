@@ -318,6 +318,17 @@ class Protocol(protocol.Protocol):
                     })
                     a_offset += 4
                 attribute = communities
+            elif type_code == 9:
+                type_code = "ORIGINATOR_ID"
+                attribute = ip(attribute)
+            elif type_code == 10:
+                type_code = "CLUSTER_LIST"
+                a_offset = 0
+                clusters = []
+                while a_offset < len(attribute):
+                    clusters.append(long(attribute[a_offset : a_offset + 4]))
+                    a_offset += 4
+                attribute = clusters
             else:
                 log.msg('unknown path attribute type_code: %s' % type_code)
             attributes.append({
