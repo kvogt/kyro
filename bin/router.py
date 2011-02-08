@@ -10,12 +10,12 @@ class Peer(bgp.Protocol):
     def __init__(self):
         bgp.Protocol.__init__(self)
         self.rib = {}
-        if self.factory.config['statistics']:
-            self.logTableStats()
+        self.logTableStats()
     
     def logTableStats(self):
-        log.msg('STATS (%s-%s): adj_rib: %s routes\ttotal: %s routes' % (self.peer['bgp_identifier'], self.peer['sender_as'], len(self.rib), self.total_routes))
-        reactor.callLater(5.0, self.logTableStats)
+        if self.factory.config.get('statistics'):
+            log.msg('STATS (%s-%s): adj_rib: %s routes\ttotal: %s routes' % (self.peer['bgp_identifier'], self.peer['sender_as'], len(self.rib), self.total_routes))
+            reactor.callLater(5.0, self.logTableStats)
 
     def messageReceived(self, message):
         # Called whenever a BGP message arrives from a peer
