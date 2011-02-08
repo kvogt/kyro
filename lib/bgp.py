@@ -326,7 +326,7 @@ class Protocol(protocol.Protocol):
                 a_offset = 0
                 clusters = []
                 while a_offset < len(attribute):
-                    clusters.append(long(attribute[a_offset : a_offset + 4]))
+                    clusters.append(ip(attribute[a_offset : a_offset + 4]))
                     a_offset += 4
                 attribute = clusters
             else:
