@@ -11,7 +11,7 @@ performance and inject optimal routes into a BGP router.
 Features at a Glance
 --------------------
 
-* Uses 'ping' command to measure latency and packet loss
+* Uses ICMP packets and IP TTL to map out network paths
 * Implements BGP4 protocol and can peer with BGP routers
 * Written in Python using the Twisted event framework 
 
